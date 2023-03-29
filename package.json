@@ -1,0 +1,22 @@
+{
+  "name": "listagem-de-produtos",
+  "version": "1.0.0",
+  "description": "Uma aplicação fullstack para uma listagem de produtos, esse projeto foi desenvolvido para o processo seletivo da MyPharma",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RichardRosenblat/listagem-de-produtos.git"
+  },
+  "keywords": [
+    "REST"
+  ],
+  "author": "Richard Rosenblat",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RichardRosenblat/listagem-de-produtos/issues"
+  },
+  "homepage": "https://github.com/RichardRosenblat/listagem-de-produtos#readme"
+}
