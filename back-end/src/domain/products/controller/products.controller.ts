@@ -7,36 +7,61 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { ProductsRepository } from '../repository/products.repository';
 import { CreateProductDto } from '../dto/create-product.dto';
 import { UpdateProductDto } from '../dto/update-product.dto';
+import { ProductsCommand } from '../command/products.command';
+import {
+  ApiBody,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiParam,
+  ApiTags,
+} from '@nestjs/swagger';
+import { ProductDto } from '../dto/product.dto';
 
-@Controller('products')
+@ApiTags('Products Crud')
+@Controller({ path: 'products', version: '1' })
 export class ProductsController {
-  constructor(private readonly productsService: ProductsRepository) {}
+  constructor(private readonly command: ProductsCommand) {}
 
   @Post()
+  @ApiOperation({ summary: 'Create a new product' })
+  @ApiCreatedResponse({ type: ProductDto })
+  @ApiBody({ type: CreateProductDto })
   create(@Body() createProductDto: CreateProductDto) {
-    return this.productsService.create(createProductDto);
+    return this.command.create(createProductDto);
   }
 
   @Get()
+  @ApiOperation({ summary: 'Get all products' })
+  @ApiOkResponse({ type: [ProductDto] })
   findAll() {
-    return this.productsService.findAll();
+    return this.command.findAll();
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'Get a product by id' })
+  @ApiOkResponse({ type: ProductDto })
+  @ApiParam({ name: 'id', type: String })
   findOne(@Param('id') id: string) {
-    return this.productsService.findOne(+id);
+    return this.command.findOne(id);
   }
 
   @Patch(':id')
+  @ApiOperation({ summary: 'Update a product by id' })
+  @ApiOkResponse({ type: ProductDto })
+  @ApiParam({ name: 'id', type: String })
+  @ApiBody({ type: UpdateProductDto })
   update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
-    return this.productsService.update(+id, updateProductDto);
+    return this.command.update(id, updateProductDto);
   }
 
   @Delete(':id')
+  @ApiOperation({ summary: 'Delete a product by id' })
+  @ApiOkResponse({ type: ProductDto })
+  @ApiParam({ name: 'id', type: String })
   remove(@Param('id') id: string) {
-    return this.productsService.remove(+id);
+    return this.command.remove(id);
   }
 }
