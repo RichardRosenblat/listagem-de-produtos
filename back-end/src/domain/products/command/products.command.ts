@@ -1,7 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import mongoose from 'mongoose';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { ProductsRepository } from '../repository/products.repository';
 import { CreateProductDto } from '../dto/create-product.dto';
-import mongoose from 'mongoose';
+import { UpdateProductDto } from '../dto/update-product.dto';
+
+const {
+  Types: { ObjectId },
+} = mongoose;
 
 @Injectable()
 export class ProductsCommand {
@@ -16,17 +21,24 @@ export class ProductsCommand {
   }
 
   findOne(id: string) {
-    const objectId = new mongoose.Types.ObjectId(id);
+    const objectId = this.getObjectId(id);
     return this.repository.findOne(objectId);
   }
 
-  update(id: string, updateProductDto: CreateProductDto) {
-    const objectId = new mongoose.Types.ObjectId(id);
+  update(id: string, updateProductDto: UpdateProductDto) {
+    const objectId = this.getObjectId(id);
     return this.repository.update(objectId, updateProductDto);
   }
 
   remove(id: string) {
-    const objectId = new mongoose.Types.ObjectId(id);
+    const objectId = this.getObjectId(id);
     return this.repository.remove(objectId);
+  }
+
+  private getObjectId(id: string) {
+    if (!ObjectId.isValid(id)) {
+      throw new BadRequestException(['Id must be a valid ObjectId']);
+    }
+    return new ObjectId(id);
   }
 }

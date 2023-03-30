@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -9,7 +10,11 @@ async function bootstrap() {
   app.enableShutdownHooks();
   app.enableVersioning();
   app.enableCors();
-
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+    }),
+  );
   const config = new DocumentBuilder()
     .setTitle('Listagem de Produtos')
     .setDescription('Api para listagem de produtos')

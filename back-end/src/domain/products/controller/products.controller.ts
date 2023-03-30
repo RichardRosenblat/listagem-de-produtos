@@ -38,7 +38,13 @@ export class ProductsController {
   @ApiOperation({ summary: 'Get a product by id' })
   @ApiOkResponse({ type: ProductDto })
   @ApiNotFoundResponse({ description: 'Product id not found' })
-  @ApiParam({ name: 'id', type: String })
+  @ApiParam({
+    name: 'id',
+    required: true,
+    description: 'Product Id',
+    type: String,
+    example: '60e1c5b0b9b5a8a0b4b0c0c1',
+  })
   findOne(@Param('id') id: string) {
     return this.command.findOne(id);
   }
@@ -57,7 +63,13 @@ export class ProductsController {
   @ApiOkResponse({ type: ProductDto })
   @ApiNotFoundResponse({ description: 'Product id not found' })
   @ApiBadRequestResponse({ description: 'Product body is not valid' })
-  @ApiParam({ name: 'id', type: String })
+  @ApiParam({
+    name: 'id',
+    required: true,
+    description: 'Product Id',
+    type: String,
+    example: '60e1c5b0b9b5a8a0b4b0c0c1',
+  })
   @ApiBody({ type: UpdateProductDto })
   update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
     return this.command.update(id, updateProductDto);
@@ -67,7 +79,13 @@ export class ProductsController {
   @ApiOperation({ summary: 'Delete a product by id' })
   @ApiOkResponse({ type: ProductDto })
   @ApiNotFoundResponse({ description: 'Product id not found' })
-  @ApiParam({ name: 'id', type: String })
+  @ApiParam({
+    name: 'id',
+    required: true,
+    description: 'Product Id',
+    type: String,
+    example: '60e1c5b0b9b5a8a0b4b0c0c1',
+  })
   remove(@Param('id') id: string) {
     return this.command.remove(id);
   }
