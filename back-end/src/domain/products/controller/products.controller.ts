@@ -11,8 +11,10 @@ import { CreateProductDto } from '../dto/create-product.dto';
 import { UpdateProductDto } from '../dto/update-product.dto';
 import { ProductsCommand } from '../command/products.command';
 import {
+  ApiBadRequestResponse,
   ApiBody,
   ApiCreatedResponse,
+  ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
   ApiParam,
@@ -25,14 +27,6 @@ import { ProductDto } from '../dto/product.dto';
 export class ProductsController {
   constructor(private readonly command: ProductsCommand) {}
 
-  @Post()
-  @ApiOperation({ summary: 'Create a new product' })
-  @ApiCreatedResponse({ type: ProductDto })
-  @ApiBody({ type: CreateProductDto })
-  create(@Body() createProductDto: CreateProductDto) {
-    return this.command.create(createProductDto);
-  }
-
   @Get()
   @ApiOperation({ summary: 'Get all products' })
   @ApiOkResponse({ type: [ProductDto] })
@@ -43,14 +37,26 @@ export class ProductsController {
   @Get(':id')
   @ApiOperation({ summary: 'Get a product by id' })
   @ApiOkResponse({ type: ProductDto })
+  @ApiNotFoundResponse({ description: 'Product id not found' })
   @ApiParam({ name: 'id', type: String })
   findOne(@Param('id') id: string) {
     return this.command.findOne(id);
   }
 
+  @Post()
+  @ApiOperation({ summary: 'Create a new product' })
+  @ApiCreatedResponse({ type: ProductDto })
+  @ApiBadRequestResponse({ description: 'Product body is not valid' })
+  @ApiBody({ type: CreateProductDto })
+  create(@Body() createProductDto: CreateProductDto) {
+    return this.command.create(createProductDto);
+  }
+
   @Patch(':id')
   @ApiOperation({ summary: 'Update a product by id' })
   @ApiOkResponse({ type: ProductDto })
+  @ApiNotFoundResponse({ description: 'Product id not found' })
+  @ApiBadRequestResponse({ description: 'Product body is not valid' })
   @ApiParam({ name: 'id', type: String })
   @ApiBody({ type: UpdateProductDto })
   update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
@@ -60,6 +66,7 @@ export class ProductsController {
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a product by id' })
   @ApiOkResponse({ type: ProductDto })
+  @ApiNotFoundResponse({ description: 'Product id not found' })
   @ApiParam({ name: 'id', type: String })
   remove(@Param('id') id: string) {
     return this.command.remove(id);

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ProductsRepository } from '../repository/products.repository';
 import { CreateProductDto } from '../dto/create-product.dto';
+import mongoose from 'mongoose';
 
 @Injectable()
 export class ProductsCommand {
@@ -15,14 +16,17 @@ export class ProductsCommand {
   }
 
   findOne(id: string) {
-    return this.repository.findOne(id);
+    const objectId = new mongoose.Types.ObjectId(id);
+    return this.repository.findOne(objectId);
   }
 
   update(id: string, updateProductDto: CreateProductDto) {
-    return this.repository.update(id, updateProductDto);
+    const objectId = new mongoose.Types.ObjectId(id);
+    return this.repository.update(objectId, updateProductDto);
   }
 
   remove(id: string) {
-    return this.repository.remove(id);
+    const objectId = new mongoose.Types.ObjectId(id);
+    return this.repository.remove(objectId);
   }
 }
