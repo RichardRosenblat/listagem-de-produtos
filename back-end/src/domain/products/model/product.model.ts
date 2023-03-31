@@ -10,6 +10,9 @@ export class ProductModel implements IProduct {
   name: string;
 
   @Prop()
+  description: string;
+
+  @Prop()
   price: number;
 
   @Prop()

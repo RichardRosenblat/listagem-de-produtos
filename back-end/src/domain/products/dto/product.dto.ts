@@ -6,6 +6,8 @@ export class ProductDto implements IProduct {
     this.id =
       typeof product._id === 'string' ? product._id : product._id.toHexString();
     this.name = product.name;
+    this.description = product.description;
+    this.manufacturer = product.manufacturer;
     this.price = product.price;
     this.in_stock = product.in_stock;
     this.score = product.score;
@@ -27,6 +29,14 @@ export class ProductDto implements IProduct {
     required: false,
   })
   name: string;
+
+  @ApiProperty({
+    example: 'Product 1 description',
+    description: 'Product description',
+    readOnly: true,
+    required: false,
+  })
+  description: string;
 
   @ApiProperty({
     example: 100.15,
