@@ -19,6 +19,15 @@ export class CreateProductDto implements IProduct {
   @IsString()
   @IsNotEmpty()
   name: string;
+  @ApiProperty({
+    example: 'Product 1 description',
+    description: 'Product description',
+    type: String,
+    required: true,
+  })
+  @IsString()
+  @IsNotEmpty()
+  description: string;
 
   @ApiProperty({
     example: 500.44,

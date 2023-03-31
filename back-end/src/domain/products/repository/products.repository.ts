@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { Types, Model } from 'mongoose';
-import { Product } from '../model/product.model';
+import { ProductModel } from '../model/product.model';
 import { InjectModel } from '@nestjs/mongoose';
 import { IProduct } from 'src/types/Product';
 @Injectable()
 export class ProductsRepository {
   constructor(
-    @InjectModel(Product.name)
-    private readonly productModel: Model<Product>,
+    @InjectModel(ProductModel.name)
+    private readonly productModel: Model<ProductModel>,
   ) {}
   /**
    * Creates a new product
