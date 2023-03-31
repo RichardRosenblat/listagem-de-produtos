@@ -11,13 +11,13 @@ type databaseData = {
 
 export class ModelMock {
   private data: Record<string, any>;
-  static memoryDatabase: databaseData[] = [];
+  public static memoryDatabase: databaseData[] = [];
 
   constructor(data: Record<string, any>) {
     this.data = data;
   }
 
-  save = jest.fn(() => {
+  public save = jest.fn(() => {
     const createdObj = {
       ...this.data,
       _id: new ObjectId(),
@@ -28,7 +28,7 @@ export class ModelMock {
     return { toObject: () => createdObj };
   });
 
-  static resetMemoryDatabase = () => {
+  public static resetMemoryDatabase = () => {
     ModelMock.memoryDatabase = [];
   };
 
@@ -41,18 +41,23 @@ export class ModelMock {
     };
   });
 
-  static findOne = jest.fn(({ _id: id }: { _id: mongoose.Types.ObjectId }) => {
-    return {
-      exec: () => ({
-        toObject: () =>
-          ModelMock.memoryDatabase.find(
+  public static findOne = jest.fn(
+    ({ _id: id }: { _id: mongoose.Types.ObjectId }) => {
+      return {
+        exec: () => {
+          const foundObj = ModelMock.memoryDatabase.find(
             (item) => item._id.toHexString() === id.toHexString(),
-          ),
-      }),
-    };
-  });
+          );
+          if (!foundObj) return undefined;
+          return {
+            toObject: () => foundObj,
+          };
+        },
+      };
+    },
+  );
 
-  static updateOne = jest.fn(
+  public static updateOne = jest.fn(
     ({ _id: id }: { _id: mongoose.Types.ObjectId }, data: any) => {
       return {
         exec: () => {
@@ -69,7 +74,7 @@ export class ModelMock {
     },
   );
 
-  static deleteOne = jest.fn(
+  public static deleteOne = jest.fn(
     ({ _id: id }: { _id: mongoose.Types.ObjectId }) => {
       return {
         exec: () => {
