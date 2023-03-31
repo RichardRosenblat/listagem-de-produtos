@@ -5,7 +5,7 @@ import { IProduct } from 'src/types/Product';
 export type ProductDocument = HydratedDocument<IProduct>;
 
 @Schema({ timestamps: true })
-export class Product implements IProduct {
+export class ProductModel implements IProduct {
   @Prop()
   name: string;
 
@@ -28,4 +28,4 @@ export class Product implements IProduct {
   updatedAt: Date;
 }
 
-export const ProductFactory = SchemaFactory.createForClass(Product);
+export const ProductSchema = SchemaFactory.createForClass(ProductModel);
