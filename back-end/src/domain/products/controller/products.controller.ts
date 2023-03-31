@@ -27,11 +27,6 @@ import { ProductDto } from '../dto/product.dto';
 export class ProductsController {
   constructor(private readonly command: ProductsCommand) {}
 
-  /**
-   * Get all products
-   * @returns {Promise<ProductDto[]>} List of all products
-   * @memberof ProductsController
-   */
   @Get()
   @ApiOperation({ summary: 'Get all products' })
   @ApiOkResponse({ type: [ProductDto], description: 'All products' })
@@ -39,14 +34,6 @@ export class ProductsController {
     return this.command.findAll();
   }
 
-  /**
-   * Get a product by id
-   * @param {string} id Product id
-   * @returns {Promise<ProductDto>}
-   * @throws {NotFoundException} Product id not found
-   * @throws {BadRequestException} Id is not a valid ObjectId
-   * @memberof ProductsController
-   */
   @Get(':id')
   @ApiOperation({ summary: 'Get a product by id' })
   @ApiOkResponse({ type: ProductDto, description: 'Product found' })
@@ -63,13 +50,6 @@ export class ProductsController {
     return this.command.findOne(id);
   }
 
-  /**
-   * Create a new product
-   * @param {CreateProductDto} createProductDto Product body
-   * @returns {Promise<ProductDto>} Created product
-   * @throws {BadRequestException} Product body is not valid
-   * @memberof ProductsController
-   */
   @Post()
   @ApiOperation({ summary: 'Create a new product' })
   @ApiCreatedResponse({ type: ProductDto, description: 'Created product' })
@@ -81,16 +61,6 @@ export class ProductsController {
     return this.command.create(createProductDto);
   }
 
-  /**
-   * Update a product by id
-   * @param {string} id Product id
-   * @param {UpdateProductDto} updateProductDto Product body
-   * @returns {Promise<ProductDto>} Updated product
-   * @throws {NotFoundException} Product id not found
-   * @throws {BadRequestException} Product body is not valid
-   * @throws {BadRequestException} Id is not a valid ObjectId
-   * @memberof ProductsController
-   */
   @Patch(':id')
   @ApiOperation({ summary: 'Update a product by id' })
   @ApiOkResponse({ type: ProductDto, description: 'Updated product' })
@@ -112,14 +82,6 @@ export class ProductsController {
     return this.command.update(id, updateProductDto);
   }
 
-  /**
-   * Delete a product by id
-   * @param {string} id Product id
-   * @returns {Promise<ProductDto>} Deleted product
-   * @throws {NotFoundException} Product id not found
-   * @throws {BadRequestException} Id is not a valid ObjectId
-   * @memberof ProductsController
-   */
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a product by id' })
   @ApiOkResponse({ type: ProductDto, description: 'Deleted product' })

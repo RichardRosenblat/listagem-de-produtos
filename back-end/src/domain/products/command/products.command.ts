@@ -18,7 +18,7 @@ export class ProductsCommand {
   constructor(private readonly repository: ProductsRepository) {}
 
   /**
-   * Get all products
+   * Gets all products
    * @returns {Promise<ProductDto[]>} List of all products
    * @memberof ProductsCommand
    */
@@ -28,9 +28,9 @@ export class ProductsCommand {
   }
 
   /**
-   * Get a product by id
+   * Gets a product by id
    * @param {string} id Product id
-   * @returns {Promise<ProductDto>}
+   * @returns {Promise<ProductDto>} Found product
    * @throws {NotFoundException} Product id not found
    * @throws {BadRequestException} Id must be a valid ObjectId
    * @memberof ProductsCommand
@@ -45,7 +45,7 @@ export class ProductsCommand {
   }
 
   /**
-   * Create a new product
+   * Creates a new product
    * @param {CreateProductDto} createProductDto Product body
    * @returns {Promise<ProductDto>} Created product
    * @memberof ProductsCommand
@@ -56,7 +56,7 @@ export class ProductsCommand {
   }
 
   /**
-   * Update a product
+   * Updates a product
    * @param {string} id Product id
    * @param {UpdateProductDto} updateProductDto Product body
    * @returns {Promise<ProductDto>} Updated product
@@ -80,7 +80,7 @@ export class ProductsCommand {
   }
 
   /**
-   * Remove a product
+   * Removes a product
    * @param {string} id Product id
    * @returns {Promise<ProductDto>} Removed product
    * @throws {NotFoundException} Product id not found
