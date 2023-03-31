@@ -1,27 +1,48 @@
 import { Injectable } from '@nestjs/common';
 import { CreateProductDto } from '../dto/create-product.dto';
 import { UpdateProductDto } from '../dto/update-product.dto';
-import mongoose from 'mongoose';
-
+import { Types, Model } from 'mongoose';
+import { Product } from '../model/product.model';
+import { InjectModel } from '@nestjs/mongoose';
+import { IProduct } from 'src/types/Product';
 @Injectable()
 export class ProductsRepository {
-  create(createProductDto: CreateProductDto) {
-    return 'This action adds a new product';
+  constructor(
+    @InjectModel(Product.name)
+    private readonly productModel: Model<Product>,
+  ) {}
+
+  async create(createProductDto: CreateProductDto): Promise<IProduct> {
+    const createdProduct = await new this.productModel(createProductDto).save();
+
+    return createdProduct.toObject();
   }
 
-  findAll() {
-    return `This action returns all products`;
+  async findAll(): Promise<IProduct[]> {
+    const productList = await this.productModel.find().exec();
+
+    return productList.map((product) => product.toObject());
   }
 
-  findOne(id: mongoose.Types.ObjectId) {
-    return `This action returns a #${id} product`;
+  async findOne(id: Types.ObjectId): Promise<IProduct> {
+    const foundProduct = await this.productModel.findOne({ _id: id }).exec();
+
+    return foundProduct ? foundProduct.toObject() : null;
   }
 
-  update(id: mongoose.Types.ObjectId, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  async update(id: Types.ObjectId, updateProductDto: UpdateProductDto) {
+    await this.productModel.updateOne({ _id: id }, updateProductDto).exec();
+
+    return this.findOne(id);
   }
 
-  remove(id: mongoose.Types.ObjectId) {
-    return `This action removes a #${id} product`;
+  async remove(id: Types.ObjectId) {
+    const removedProduct = await this.findOne(id);
+
+    if (!removedProduct) return null;
+
+    await this.productModel.deleteOne({ _id: id }).exec();
+
+    return removedProduct;
   }
 }

@@ -9,9 +9,7 @@ import {
 } from 'class-validator';
 import { IProduct } from 'src/types/Product';
 
-export class CreateProductDto
-  implements Omit<IProduct, 'updatedAt' | 'createdAt'>
-{
+export class CreateProductDto implements IProduct {
   @ApiProperty({
     example: 'Product 1',
     description: 'Product name',
