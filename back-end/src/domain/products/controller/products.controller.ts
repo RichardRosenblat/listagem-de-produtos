@@ -44,11 +44,13 @@ export class ProductsController {
    * @param {string} id Product id
    * @returns {Promise<ProductDto>}
    * @throws {NotFoundException} Product id not found
+   * @throws {BadRequestException} Id is not a valid ObjectId
    * @memberof ProductsController
    */
   @Get(':id')
   @ApiOperation({ summary: 'Get a product by id' })
   @ApiOkResponse({ type: ProductDto, description: 'Product found' })
+  @ApiBadRequestResponse({ description: 'Product id is not a valid ObjectId' })
   @ApiNotFoundResponse({ description: 'Product id not found' })
   @ApiParam({
     name: 'id',
@@ -86,6 +88,7 @@ export class ProductsController {
    * @returns {Promise<ProductDto>} Updated product
    * @throws {NotFoundException} Product id not found
    * @throws {BadRequestException} Product body is not valid
+   * @throws {BadRequestException} Id is not a valid ObjectId
    * @memberof ProductsController
    */
   @Patch(':id')
@@ -93,6 +96,7 @@ export class ProductsController {
   @ApiOkResponse({ type: ProductDto, description: 'Updated product' })
   @ApiNotFoundResponse({ description: 'Product id not found' })
   @ApiBadRequestResponse({ description: 'Product body is not valid' })
+  @ApiBadRequestResponse({ description: 'Product id is not a valid ObjectId' })
   @ApiParam({
     name: 'id',
     required: true,
@@ -113,12 +117,14 @@ export class ProductsController {
    * @param {string} id Product id
    * @returns {Promise<ProductDto>} Deleted product
    * @throws {NotFoundException} Product id not found
+   * @throws {BadRequestException} Id is not a valid ObjectId
    * @memberof ProductsController
    */
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a product by id' })
   @ApiOkResponse({ type: ProductDto, description: 'Deleted product' })
   @ApiNotFoundResponse({ description: 'Product id not found' })
+  @ApiBadRequestResponse({ description: 'Product id is not a valid ObjectId' })
   @ApiParam({
     name: 'id',
     required: true,
