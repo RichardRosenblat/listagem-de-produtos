@@ -5,14 +5,13 @@ const {
 
 type databaseData = {
   _id: mongoose.Types.ObjectId;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 } & Record<string, any>;
 
-export const memoryDatabase: databaseData[] = [];
-
-export class modelMock {
-  data: Record<string, any>;
+export class ModelMock {
+  private data: Record<string, any>;
+  static memoryDatabase: databaseData[] = [];
 
   constructor(data: Record<string, any>) {
     this.data = data;
@@ -22,17 +21,23 @@ export class modelMock {
     const createdObj = {
       ...this.data,
       _id: new ObjectId(),
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     };
-    memoryDatabase.push(createdObj);
+    ModelMock.memoryDatabase.push(createdObj);
     return { toObject: () => createdObj };
   });
+
+  static resetMemoryDatabase = () => {
+    ModelMock.memoryDatabase = [];
+  };
 
   static find = jest.fn(() => {
     return {
       exec: () =>
-        memoryDatabase.map((element) => ({ toObject: () => element })),
+        ModelMock.memoryDatabase.map((element) => ({
+          toObject: () => element,
+        })),
     };
   });
 
@@ -40,7 +45,7 @@ export class modelMock {
     return {
       exec: () => ({
         toObject: () =>
-          memoryDatabase.find(
+          ModelMock.memoryDatabase.find(
             (item) => item._id.toHexString() === id.toHexString(),
           ),
       }),
@@ -51,11 +56,11 @@ export class modelMock {
     ({ _id: id }: { _id: mongoose.Types.ObjectId }, data: any) => {
       return {
         exec: () => {
-          const index = memoryDatabase.findIndex(
+          const index = ModelMock.memoryDatabase.findIndex(
             (item) => item._id.toHexString() === id.toHexString(),
           );
-          memoryDatabase[index] = {
-            ...memoryDatabase[index],
+          ModelMock.memoryDatabase[index] = {
+            ...ModelMock.memoryDatabase[index],
             ...data,
             updatedAt: new Date(),
           };
@@ -68,10 +73,10 @@ export class modelMock {
     ({ _id: id }: { _id: mongoose.Types.ObjectId }) => {
       return {
         exec: () => {
-          const index = memoryDatabase.findIndex(
+          const index = ModelMock.memoryDatabase.findIndex(
             (item) => item._id.toHexString() === id.toHexString(),
           );
-          memoryDatabase.splice(index, 1);
+          ModelMock.memoryDatabase.splice(index, 1);
         },
       };
     },
