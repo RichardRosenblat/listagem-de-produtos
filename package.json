@@ -4,6 +4,8 @@
   "description": "Uma aplicação fullstack para uma listagem de produtos, esse projeto foi desenvolvido para o processo seletivo da MyPharma",
   "main": "index.js",
   "scripts": {
+    "install:back": "cd back-end && npm install",
+    "ci:back": "cd back-end && npm ci",
     "start:back": "cd back-end && npm run start",
     "start:back:dev": "cd back-end && npm run start:dev",
     "test:back": "cd back-end && npm run test"
