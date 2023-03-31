@@ -17,7 +17,9 @@ async function bootstrap() {
   );
   const config = new DocumentBuilder()
     .setTitle('Listagem de Produtos')
-    .setDescription('Api para listagem de produtos')
+    .setDescription(
+      'An product list API designed allow users to Created Read Update and Delete products from a database',
+    )
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);

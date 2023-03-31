@@ -1,5 +1,7 @@
+import mongoose from 'mongoose';
+
 export interface IProduct {
-  _id?: string;
+  _id?: string | mongoose.Types.ObjectId;
   name: string;
   price: number;
   in_stock: boolean;

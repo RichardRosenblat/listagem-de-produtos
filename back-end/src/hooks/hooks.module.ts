@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { OnApplicationShutdownHook } from './onApplicationShutdown.service';
+import { OnApplicationShutdownHook } from './onApplicationShutdown.hook';
 
 @Module({
   providers: [OnApplicationShutdownHook],

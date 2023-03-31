@@ -3,11 +3,14 @@ import { IProduct } from 'src/types/Product';
 
 export class ProductDto implements IProduct {
   constructor(product: IProduct) {
-    this.id = product._id;
+    this.id =
+      typeof product._id === 'string' ? product._id : product._id.toHexString();
     this.name = product.name;
     this.price = product.price;
     this.in_stock = product.in_stock;
     this.score = product.score;
+    this.createdAt = product.createdAt;
+    this.updatedAt = product.updatedAt;
   }
   @ApiProperty({
     example: '60e1c5b0b9b5a8a0b4b0c0c1',
