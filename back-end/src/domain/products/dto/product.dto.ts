@@ -2,6 +2,13 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IProduct } from 'src/types/Product';
 
 export class ProductDto implements IProduct {
+  constructor(product: IProduct) {
+    this.id = product._id;
+    this.name = product.name;
+    this.price = product.price;
+    this.in_stock = product.in_stock;
+    this.score = product.score;
+  }
   @ApiProperty({
     example: '60e1c5b0b9b5a8a0b4b0c0c1',
     description: 'Product Id',

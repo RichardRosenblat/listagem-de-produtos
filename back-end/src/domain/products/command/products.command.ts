@@ -12,25 +12,25 @@ const {
 export class ProductsCommand {
   constructor(private readonly repository: ProductsRepository) {}
 
-  create(createProductDto: CreateProductDto) {
+  async create(createProductDto: CreateProductDto) {
     return this.repository.create(createProductDto);
   }
 
-  findAll() {
+  async findAll() {
     return this.repository.findAll();
   }
 
-  findOne(id: string) {
+  async findOne(id: string) {
     const objectId = this.getObjectId(id);
     return this.repository.findOne(objectId);
   }
 
-  update(id: string, updateProductDto: UpdateProductDto) {
+  async update(id: string, updateProductDto: UpdateProductDto) {
     const objectId = this.getObjectId(id);
     return this.repository.update(objectId, updateProductDto);
   }
 
-  remove(id: string) {
+  async remove(id: string) {
     const objectId = this.getObjectId(id);
     return this.repository.remove(objectId);
   }

@@ -29,14 +29,14 @@ export class ProductsController {
 
   @Get()
   @ApiOperation({ summary: 'Get all products' })
-  @ApiOkResponse({ type: [ProductDto] })
+  @ApiOkResponse({ type: [ProductDto], description: 'All products' })
   findAll() {
     return this.command.findAll();
   }
 
   @Get(':id')
   @ApiOperation({ summary: 'Get a product by id' })
-  @ApiOkResponse({ type: ProductDto })
+  @ApiOkResponse({ type: ProductDto, description: 'Product found' })
   @ApiNotFoundResponse({ description: 'Product id not found' })
   @ApiParam({
     name: 'id',
@@ -51,7 +51,7 @@ export class ProductsController {
 
   @Post()
   @ApiOperation({ summary: 'Create a new product' })
-  @ApiCreatedResponse({ type: ProductDto })
+  @ApiCreatedResponse({ type: ProductDto, description: 'Created product' })
   @ApiBadRequestResponse({ description: 'Product body is not valid' })
   @ApiBody({ type: CreateProductDto })
   create(@Body() createProductDto: CreateProductDto) {
@@ -60,7 +60,7 @@ export class ProductsController {
 
   @Patch(':id')
   @ApiOperation({ summary: 'Update a product by id' })
-  @ApiOkResponse({ type: ProductDto })
+  @ApiOkResponse({ type: ProductDto, description: 'Updated product' })
   @ApiNotFoundResponse({ description: 'Product id not found' })
   @ApiBadRequestResponse({ description: 'Product body is not valid' })
   @ApiParam({
@@ -77,7 +77,7 @@ export class ProductsController {
 
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a product by id' })
-  @ApiOkResponse({ type: ProductDto })
+  @ApiOkResponse({ type: ProductDto, description: 'Deleted product' })
   @ApiNotFoundResponse({ description: 'Product id not found' })
   @ApiParam({
     name: 'id',
