@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { CathegoryEnum } from 'src/enums/cathegory.enum';
-import { IProduct } from 'src/types/Product';
+import { CathegoryEnum } from '../../../enums/cathegory.enum';
+import { IProduct } from '../../../types/Product';
 
 export class ProductDto implements IProduct {
   constructor(product: IProduct) {

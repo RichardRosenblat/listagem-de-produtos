@@ -8,8 +8,8 @@ import {
   Max,
   Min,
 } from 'class-validator';
-import { CathegoryEnum } from 'src/enums/cathegory.enum';
-import { IProduct } from 'src/types/Product';
+import { CathegoryEnum } from '../../../enums/cathegory.enum';
+import { IProduct } from '../../../types/Product';
 
 export class CreateProductDto implements IProduct {
   @ApiProperty({
