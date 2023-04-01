@@ -1,12 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsBoolean,
+  IsEnum,
   IsNotEmpty,
   IsNumber,
   IsString,
   Max,
   Min,
 } from 'class-validator';
+import { CathegoryEnum } from 'src/enums/cathegory.enum';
 import { IProduct } from 'src/types/Product';
 
 export class CreateProductDto implements IProduct {
@@ -70,6 +72,16 @@ export class CreateProductDto implements IProduct {
     { message: 'Score must be a number with max 2 decimal places' },
   )
   score: number;
+
+  @ApiProperty({
+    example: 'ELECTRONICS',
+    description: 'Product cathegory',
+    enum: CathegoryEnum,
+    required: true,
+  })
+  @IsNotEmpty()
+  @IsEnum(CathegoryEnum)
+  cathegory: CathegoryEnum;
 
   @ApiProperty({
     example: 'Manufacturer 1',

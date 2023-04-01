@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
+import { CathegoryEnum } from 'src/enums/cathegory.enum';
 import { IProduct } from 'src/types/Product';
 
 export type ProductDocument = HydratedDocument<IProduct>;
@@ -23,6 +24,9 @@ export class ProductModel implements IProduct {
 
   @Prop()
   score: number;
+
+  @Prop()
+  cathegory: CathegoryEnum;
 
   @Prop()
   createdAt: Date;
