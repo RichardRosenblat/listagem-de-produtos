@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { CathegoryEnum } from 'src/enums/cathegory.enum';
+import { CathegoryEnum } from '../enums/cathegory.enum';
 
 export interface IProduct {
   _id?: string | mongoose.Types.ObjectId;

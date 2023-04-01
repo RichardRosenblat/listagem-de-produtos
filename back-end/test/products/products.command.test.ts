@@ -2,11 +2,12 @@ import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getModelToken } from '@nestjs/mongoose';
 import { ProductsRepository } from '../../src/domain/products/repository/products.repository';
-import { ProductModel } from '../../src/domain/products/model/product.model';
 import { ModelMock } from '../mocks/product-model.mock';
 import { ProductsCommand } from '../../src/domain/products/command/products.command';
 import { ProductDto } from '../../src/domain/products/dto/product.dto';
 import mongoose from 'mongoose';
+import { CathegoryEnum } from '../../src/enums/cathegory.enum';
+import { IProduct } from '../../src/types/Product';
 
 describe('ProductsCommand', () => {
   let module: TestingModule;
@@ -18,7 +19,7 @@ describe('ProductsCommand', () => {
         ProductsRepository,
         ProductsCommand,
         {
-          provide: getModelToken(ProductModel.name),
+          provide: getModelToken('Products'),
           useValue: ModelMock,
         },
       ],
@@ -29,22 +30,26 @@ describe('ProductsCommand', () => {
 
   beforeEach(() => {
     ModelMock.resetMemoryDatabase();
-    new ModelMock({
+    const defaultProduct1: IProduct = {
       name: 'Product 1',
       description: 'product description',
       manufacturer: 'manufactor 1',
+      cathegory: CathegoryEnum['ELECTRONICS'],
       price: 500.4,
       in_stock: true,
       score: 4.5,
-    }).save();
-    new ModelMock({
+    };
+    const defaultProduct2: IProduct = {
       name: 'Product 2',
       description: 'product description',
       manufacturer: 'manufactor 2',
+      cathegory: CathegoryEnum['ELECTRONICS'],
       price: 500.4,
       in_stock: true,
       score: 4.5,
-    }).save();
+    };
+    new ModelMock(defaultProduct1).save();
+    new ModelMock(defaultProduct2).save();
   });
 
   afterEach(() => {
@@ -78,6 +83,7 @@ describe('ProductsCommand', () => {
       expect(productsList[0].description).toBe(dbProduct.description);
       expect(productsList[0].manufacturer).toBe(dbProduct.manufacturer);
       expect(productsList[0].price).toBe(dbProduct.price);
+      expect(productsList[0].cathegory).toBe(dbProduct.cathegory);
       expect(productsList[0].in_stock).toBe(dbProduct.in_stock);
       expect(productsList[0].score).toBe(dbProduct.score);
     });
@@ -98,6 +104,7 @@ describe('ProductsCommand', () => {
       expect(product.description).toBe(dbProduct.description);
       expect(product.manufacturer).toBe(dbProduct.manufacturer);
       expect(product.price).toBe(dbProduct.price);
+      expect(product.cathegory).toBe(dbProduct.cathegory);
       expect(product.in_stock).toBe(dbProduct.in_stock);
       expect(product.score).toBe(dbProduct.score);
     });
@@ -119,11 +126,12 @@ describe('ProductsCommand', () => {
     });
   });
   describe('create', () => {
-    const newProduct = {
+    const newProduct: IProduct = {
       name: 'Product 3',
       description: 'product description',
       manufacturer: 'manufactor 3',
       price: 500.4,
+      cathegory: CathegoryEnum['ELECTRONICS'],
       in_stock: true,
       score: 4.5,
     };
@@ -146,11 +154,12 @@ describe('ProductsCommand', () => {
     });
   });
   describe('update', () => {
-    const updateProduct = {
+    const updateProduct: IProduct = {
       name: 'Product 3',
       description: 'product description',
       manufacturer: 'manufactor 3',
       price: 500.4,
+      cathegory: CathegoryEnum['FOOD'],
       in_stock: true,
       score: 4.5,
     };
@@ -207,6 +216,7 @@ describe('ProductsCommand', () => {
       expect(productDeleted.description).toBe(dbProduct.description);
       expect(productDeleted.manufacturer).toBe(dbProduct.manufacturer);
       expect(productDeleted.price).toBe(dbProduct.price);
+      expect(productDeleted.cathegory).toBe(dbProduct.cathegory);
       expect(productDeleted.in_stock).toBe(dbProduct.in_stock);
       expect(productDeleted.score).toBe(dbProduct.score);
     });
