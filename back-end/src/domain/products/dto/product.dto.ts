@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IProduct } from 'src/types/Product';
+import { CathegoryEnum } from '../../../enums/cathegory.enum';
+import { IProduct } from '../../../types/Product';
 
 export class ProductDto implements IProduct {
   constructor(product: IProduct) {
@@ -11,6 +12,7 @@ export class ProductDto implements IProduct {
     this.price = product.price;
     this.in_stock = product.in_stock;
     this.score = product.score;
+    this.cathegory = product.cathegory;
     this.createdAt = product.createdAt;
     this.updatedAt = product.updatedAt;
   }
@@ -61,6 +63,15 @@ export class ProductDto implements IProduct {
     required: false,
   })
   score: number;
+
+  @ApiProperty({
+    example: 'ELECTRONICS',
+    description: 'Product cathegory',
+    readOnly: true,
+    enum: CathegoryEnum,
+    required: false,
+  })
+  cathegory: CathegoryEnum;
 
   @ApiProperty({
     example: 'Manufacturer 1',

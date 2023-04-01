@@ -6,7 +6,7 @@ import { IProduct } from 'src/types/Product';
 @Injectable()
 export class ProductsRepository {
   constructor(
-    @InjectModel(ProductModel.name)
+    @InjectModel('Products')
     private readonly productModel: Model<ProductModel>,
   ) {}
   /**

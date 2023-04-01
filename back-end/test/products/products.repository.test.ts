@@ -1,9 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getModelToken } from '@nestjs/mongoose';
 import { ProductsRepository } from '../../src/domain/products/repository/products.repository';
-import { ProductModel } from '../../src/domain/products/model/product.model';
 import { ModelMock } from '../mocks/product-model.mock';
 import mongoose from 'mongoose';
+import { IProduct } from '../../src/types/Product';
+import { CathegoryEnum } from '../../src/enums/cathegory.enum';
 
 describe('ProductsRepository', () => {
   let module: TestingModule;
@@ -14,7 +15,7 @@ describe('ProductsRepository', () => {
       providers: [
         ProductsRepository,
         {
-          provide: getModelToken(ProductModel.name),
+          provide: getModelToken('Products'),
           useValue: ModelMock,
         },
       ],
@@ -25,22 +26,26 @@ describe('ProductsRepository', () => {
 
   beforeEach(() => {
     ModelMock.resetMemoryDatabase();
-    new ModelMock({
+    const defaultProduct1: IProduct = {
       name: 'Product 1',
       description: 'product description',
       manufacturer: 'manufactor 1',
+      cathegory: CathegoryEnum['ELECTRONICS'],
       price: 500.4,
       in_stock: true,
       score: 4.5,
-    }).save();
-    new ModelMock({
+    };
+    const defaultProduct2: IProduct = {
       name: 'Product 2',
       description: 'product description',
       manufacturer: 'manufactor 2',
+      cathegory: CathegoryEnum['ELECTRONICS'],
       price: 500.4,
       in_stock: true,
       score: 4.5,
-    }).save();
+    };
+    new ModelMock(defaultProduct1).save();
+    new ModelMock(defaultProduct2).save();
   });
 
   afterEach(() => {
@@ -67,6 +72,7 @@ describe('ProductsRepository', () => {
       expect(productsList[0]).toHaveProperty('description');
       expect(productsList[0]).toHaveProperty('manufacturer');
       expect(productsList[0]).toHaveProperty('price');
+      expect(productsList[0]).toHaveProperty('cathegory');
       expect(productsList[0]).toHaveProperty('in_stock');
       expect(productsList[0]).toHaveProperty('score');
     });
@@ -80,6 +86,7 @@ describe('ProductsRepository', () => {
       expect(foundProduct).toHaveProperty('description');
       expect(foundProduct).toHaveProperty('manufacturer');
       expect(foundProduct).toHaveProperty('price');
+      expect(foundProduct).toHaveProperty('cathegory');
       expect(foundProduct).toHaveProperty('in_stock');
       expect(foundProduct).toHaveProperty('score');
     });
@@ -101,13 +108,15 @@ describe('ProductsRepository', () => {
       expect(foundProduct.price).toBe(productFromDb.price);
       expect(foundProduct.in_stock).toBe(productFromDb.in_stock);
       expect(foundProduct.score).toBe(productFromDb.score);
+      expect(foundProduct.cathegory).toBe(productFromDb.cathegory);
     });
   });
   describe('create', () => {
-    const newProduct = {
+    const newProduct: IProduct = {
       name: 'Product 3',
       description: 'product description',
       manufacturer: 'manufactor 3',
+      cathegory: CathegoryEnum['ELECTRONICS'],
       price: 500.4,
       in_stock: true,
       score: 4.5,
@@ -120,6 +129,7 @@ describe('ProductsRepository', () => {
       expect(createdProduct).toHaveProperty('price');
       expect(createdProduct).toHaveProperty('in_stock');
       expect(createdProduct).toHaveProperty('score');
+      expect(createdProduct).toHaveProperty('cathegory');
     });
     it('should create a product with the correct properties', async () => {
       const createdProduct = await productRepository.create(newProduct);
@@ -129,6 +139,7 @@ describe('ProductsRepository', () => {
       expect(createdProduct.price).toBe(newProduct.price);
       expect(createdProduct.in_stock).toBe(newProduct.in_stock);
       expect(createdProduct.score).toBe(newProduct.score);
+      expect(createdProduct.cathegory).toBe(newProduct.cathegory);
     });
     it('should insert the product into the database', async () => {
       await productRepository.create(newProduct);
@@ -138,11 +149,12 @@ describe('ProductsRepository', () => {
     });
   });
   describe('update', () => {
-    const updatedProduct = {
+    const updatedProduct: IProduct = {
       name: 'new name',
       description: 'new description',
       manufacturer: 'new manufacturer',
       price: 4,
+      cathegory: CathegoryEnum['ELECTRONICS'],
       in_stock: false,
       score: 2,
     };
@@ -157,6 +169,7 @@ describe('ProductsRepository', () => {
       expect(productUpdated).toHaveProperty('price');
       expect(productUpdated).toHaveProperty('in_stock');
       expect(productUpdated).toHaveProperty('score');
+      expect(productUpdated).toHaveProperty('cathegory');
     });
     it('should update a product with the correct properties', async () => {
       const productUpdated = await productRepository.update(
@@ -169,6 +182,7 @@ describe('ProductsRepository', () => {
       expect(productUpdated.price).toBe(updatedProduct.price);
       expect(productUpdated.in_stock).toBe(updatedProduct.in_stock);
       expect(productUpdated.score).toBe(updatedProduct.score);
+      expect(productUpdated.cathegory).toBe(updatedProduct.cathegory);
     });
     it('should update the product in the database', async () => {
       await productRepository.update(
@@ -198,6 +212,7 @@ describe('ProductsRepository', () => {
       expect(deletedProduct).toHaveProperty('price');
       expect(deletedProduct).toHaveProperty('in_stock');
       expect(deletedProduct).toHaveProperty('score');
+      expect(deletedProduct).toHaveProperty('cathegory');
     });
     it('should delete a product with the correct properties', async () => {
       const productFromDb = ModelMock.memoryDatabase[0];
@@ -210,6 +225,7 @@ describe('ProductsRepository', () => {
       expect(deletedProduct.price).toBe(productFromDb.price);
       expect(deletedProduct.in_stock).toBe(productFromDb.in_stock);
       expect(deletedProduct.score).toBe(productFromDb.score);
+      expect(deletedProduct.cathegory).toBe(productFromDb.cathegory);
     });
     it('should delete the product from the database', async () => {
       await productRepository.remove(ModelMock.memoryDatabase[0]._id);
