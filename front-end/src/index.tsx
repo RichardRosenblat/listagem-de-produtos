@@ -1,17 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { CssBaseline, ThemeProvider } from '@mui/material';
-import { theme } from './styles/theme';
-import ProductList from './pages/ProductsList';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import { theme } from "./styles/theme";
+import ProductList from "./pages/ProductsList";
+import { Toaster } from "react-hot-toast";
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
-  <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <ProductList />
-    </ThemeProvider>
-  </React.StrictMode>
+	<React.StrictMode>
+		<ThemeProvider theme={theme}>
+			<CssBaseline />
+			<ProductList />
+			<Toaster position="bottom-right" />
+		</ThemeProvider>
+	</React.StrictMode>
 );
