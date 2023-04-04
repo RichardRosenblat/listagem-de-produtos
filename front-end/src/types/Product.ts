@@ -1,7 +1,7 @@
 import { CathegoryEnum } from "enums/cathegories";
 
 export interface IProduct {
-	_id?: string;
+	_id: string;
 	name: string;
 	description: string;
 	price: number;
@@ -9,6 +9,6 @@ export interface IProduct {
 	cathegory: CathegoryEnum;
 	score: number;
 	manufacturer: string;
-	updatedAt?: Date;
-	createdAt?: Date;
+	updatedAt: Date;
+	createdAt: Date;
 }

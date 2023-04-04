@@ -54,7 +54,7 @@ const Products = ({ productsList, isLoading }: props) => {
 													color: product.in_stock
 														? theme.palette.text.primary
 														: theme.palette.text.disabled,
-													// textDecoration: product.in_stock ? "none" : "line-through",
+													textDecoration: product.in_stock ? "none" : "line-through",
 												}}
 											>
 												{product.name}
@@ -65,7 +65,6 @@ const Products = ({ productsList, isLoading }: props) => {
 													color: product.in_stock
 														? theme.palette.text.secondary
 														: theme.palette.text.disabled,
-													// textDecoration: product.in_stock ? "none" : "line-through",
 												}}
 											>
 												{shortenDescription(product.description)}
