@@ -66,13 +66,22 @@ const Products = ({ productsList, isLoading }: props) => {
 											</Typography>
 										</CardContent>
 										<CardActions>
-											<Button size="small" onClick={() => openProductDetails(product)}>
+											<Button
+												color="secondary"
+												aria-label="Mais Informação"
+												size="small"
+												onClick={() => openProductDetails(product)}
+												variant="outlined"
+											>
 												Mais Informação
 											</Button>
 											<Button
 												sx={{
 													textDecoration: product.in_stock ? "none" : "line-through",
 												}}
+												aria-label="Adicionar ao Carrinho"
+												color="secondary"
+												variant="outlined"
 												disabled={!product.in_stock}
 												size="small"
 											>
