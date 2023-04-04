@@ -22,7 +22,7 @@ export default function TopBar() {
 						Listagem de produtos
 					</Typography>
 					<Tooltip enterNextDelay={200} title={"Abrir carrinho"} TransitionComponent={Zoom}>
-						<IconButton size="large" edge="end" color="inherit" aria-label="open cart" sx={{ mr: 2 }}>
+						<IconButton size="large" edge="end" color="inherit" aria-label="Abrir carrinho" sx={{ mr: 2 }}>
 							<ShoppingCartIcon />
 						</IconButton>
 					</Tooltip>

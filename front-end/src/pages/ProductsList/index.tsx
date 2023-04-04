@@ -20,7 +20,7 @@ const ProductList = () => {
 	const { isLoading, isError, data } = useQuery<IProduct[]>(["productsList"], getProductList, {});
 
 	return (
-		<Container sx={{ width: "100%" }}>
+		<Container component={"span"} sx={{ width: "100%" }}>
 			<TopBar />
 			{isError ? (
 				<Box

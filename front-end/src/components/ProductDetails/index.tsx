@@ -1,4 +1,4 @@
-import { Box, Dialog } from "@material-ui/core";
+import { Dialog } from "@material-ui/core";
 import { useProductDetails } from "hooks/useProductDetails";
 import { DialogTitle, Typography } from "@mui/material";
 import IconButton from "@material-ui/core/IconButton";

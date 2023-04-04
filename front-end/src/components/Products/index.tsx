@@ -11,6 +11,8 @@ import { theme } from "../../styles/theme";
 import { Grid, Skeleton } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useProductDetails } from "hooks/useProductDetails";
+import { useCart } from "hooks/useCart";
+import { toast } from "react-hot-toast";
 
 interface props {
 	productsList: IProduct[];
@@ -25,7 +27,13 @@ const useStyles = makeStyles({
 
 const Products = ({ productsList, isLoading }: props) => {
 	const { open: openProductDetails } = useProductDetails();
+	const { addToCart } = useCart();
 	const classes = useStyles();
+	const HandleAddToCartClick = (product: IProduct) => {
+		addToCart(product);
+		toast.success("Produto adicionado ao carrinho!");
+	};
+
 	return (
 		<Grid container spacing={2} sx={{ marginTop: 2 }}>
 			{!isLoading
@@ -44,7 +52,6 @@ const Products = ({ productsList, isLoading }: props) => {
 											<Typography
 												gutterBottom
 												variant="h5"
-												component="div"
 												sx={{
 													color: product.in_stock
 														? theme.palette.text.primary
@@ -84,6 +91,7 @@ const Products = ({ productsList, isLoading }: props) => {
 												variant="outlined"
 												disabled={!product.in_stock}
 												size="small"
+												onClick={() => HandleAddToCartClick(product)}
 											>
 												Adicionar ao Carrinho
 											</Button>
@@ -93,7 +101,7 @@ const Products = ({ productsList, isLoading }: props) => {
 							</Grid>
 						);
 				  })
-				: arrayFromSize(8).map((item) => {
+				: arrayFromSize(6).map((item) => {
 						return (
 							<Grid item xs={12} sm={6} md={4} lg={4} xl={3} key={item}>
 								<Card>
