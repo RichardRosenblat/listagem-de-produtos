@@ -1,7 +1,7 @@
-export enum CathegoryEnum {
-  'ELECTRONICS' = 'ELECTRONICS',
-  'CLOTHES' = 'CLOTHES',
-  'FOODS' = 'FOODS',
-  'BOOKS' = 'BOOKS',
-  'OTHER' = 'OTHER',
-}
+export const CathegoryEnum = {
+	ELECTRONICS: "Eletronicos",
+	CLOTHES: "Roupas",
+	FOODS: "Comidas",
+	BOOKS: "Livros",
+	OTHER: "Outros",
+};

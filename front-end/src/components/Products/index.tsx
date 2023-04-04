@@ -10,6 +10,7 @@ import { IProduct } from "types/Product";
 import { theme } from "../../styles/theme";
 import { Grid, Skeleton } from "@mui/material";
 import { makeStyles } from "@mui/styles";
+import { useProductDetails } from "hooks/useProductDetails";
 
 interface props {
 	productsList: IProduct[];
@@ -23,14 +24,8 @@ const useStyles = makeStyles({
 });
 
 const Products = ({ productsList, isLoading }: props) => {
-	const shortenDescription = (description: string) => {
-		if (description.length > 100) {
-			return description.substring(0, 100) + "...";
-		}
-		return description;
-	};
+	const { open: openProductDetails } = useProductDetails();
 	const classes = useStyles();
-
 	return (
 		<Grid container spacing={2} sx={{ marginTop: 2 }}>
 			{!isLoading
@@ -71,7 +66,9 @@ const Products = ({ productsList, isLoading }: props) => {
 											</Typography>
 										</CardContent>
 										<CardActions>
-											<Button size="small">Mais Informação</Button>
+											<Button size="small" onClick={() => openProductDetails(product)}>
+												Mais Informação
+											</Button>
 											<Button
 												sx={{
 													textDecoration: product.in_stock ? "none" : "line-through",
@@ -125,4 +122,10 @@ function arrayFromSize(size: number) {
 		array.push(i);
 	}
 	return array;
+}
+function shortenDescription(description: string) {
+	if (description.length > 100) {
+		return description.substring(0, 100) + "...";
+	}
+	return description;
 }

@@ -4,6 +4,7 @@ import TopBar from "components/TopBar";
 import { getProductList } from "services/getProductList";
 import { IProduct } from "types/Product";
 import Products from "components/Products";
+import ProductDetails from "components/ProductDetails";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +38,7 @@ const ProductList = () => {
 			) : (
 				<Products productsList={data ?? []} isLoading={isLoading} />
 			)}
+			<ProductDetails />
 		</Container>
 	);
 };

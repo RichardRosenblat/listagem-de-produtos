@@ -2,15 +2,15 @@ import { useRecoilState } from "recoil";
 import { IProduct } from "types/Product";
 import { selectedProductState } from "atoms/selectedProduct";
 
-export const useSelectedProduct = () => {
+export const useProductDetails = () => {
 	const [selectedProduct, setSelectedProduct] = useRecoilState(selectedProductState);
 
-	const selectProduct = (product: IProduct) => {
+	const open = (product: IProduct) => {
 		setSelectedProduct(product);
 	};
-	const deselectProduct = () => {
+	const close = () => {
 		setSelectedProduct(null);
 	};
 
-	return { selectedProduct, selectProduct, deselectProduct };
+	return { selectedProduct, open, close };
 };

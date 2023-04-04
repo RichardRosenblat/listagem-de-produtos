@@ -1,12 +1,11 @@
 import { CathegoryEnum } from "enums/cathegories";
-
 export interface IProduct {
 	_id: string;
 	name: string;
 	description: string;
 	price: number;
 	in_stock: boolean;
-	cathegory: CathegoryEnum;
+	cathegory: keyof typeof CathegoryEnum;
 	score: number;
 	manufacturer: string;
 	updatedAt: Date;
