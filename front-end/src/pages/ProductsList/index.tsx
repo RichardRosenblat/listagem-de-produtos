@@ -5,6 +5,7 @@ import { getProductList } from "services/getProductList";
 import { IProduct } from "types/Product";
 import Products from "components/Products";
 import ProductDetails from "components/ProductDetails";
+import CartDrawer from "components/CartDrawer";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ const ProductList = () => {
 	return (
 		<Container component={"span"} sx={{ width: "100%" }}>
 			<TopBar />
+			<CartDrawer />
 			{isError ? (
 				<Box
 					sx={{

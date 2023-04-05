@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import { Box } from "@mui/system";
 import { ProductImagesEnum } from "enums/productImages";
 import { IProduct } from "types/Product";
-import { theme } from "../../styles/theme";
+import { theme } from "styles/theme";
 import { Grid, Skeleton } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useProductDetails } from "hooks/useProductDetails";

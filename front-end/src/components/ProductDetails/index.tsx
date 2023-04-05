@@ -10,7 +10,9 @@ import ProductInfo, { productInfo } from "./components/ProductInfo";
 import LabelIcon from "@mui/icons-material/Label";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import StoreIcon from "@mui/icons-material/Store";
-import { CathegoryEnum } from "enums/cathegories";
+import { formatPrice } from "util/formatPrice";
+import { formatBoolean } from "util/formatBoolean";
+import { formatCathegory } from "util/formatCathegory";
 
 const useStyles = makeStyles((theme) => ({
 	avatar: {
@@ -39,21 +41,22 @@ function ProductDetails() {
 		if (!selectedProduct) {
 			return [];
 		}
+
 		return [
 			{
 				title: "Preço",
 				icon: <AttachMoneyIcon />,
-				value: selectedProduct.price.toLocaleString("pt-br", { style: "currency", currency: "BRL" }),
+				value: formatPrice(selectedProduct.price),
 			},
 			{
 				title: "Em estoque",
 				icon: <StoreIcon />,
-				value: selectedProduct.in_stock ? "Sim" : "Não",
+				value: formatBoolean(selectedProduct.in_stock),
 			},
 			{
 				title: "Categoria",
 				icon: <LabelIcon />,
-				value: CathegoryEnum[selectedProduct.cathegory],
+				value: formatCathegory(selectedProduct.cathegory),
 			},
 		];
 	};

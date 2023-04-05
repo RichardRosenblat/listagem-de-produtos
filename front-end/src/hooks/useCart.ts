@@ -1,9 +1,11 @@
 import { cartState } from "atoms/cart";
+import { cartDrawerState } from "atoms/cartDrawer";
 import { useRecoilState } from "recoil";
 import { IProduct } from "types/Product";
 
 export const useCart = () => {
 	const [cart, setCart] = useRecoilState(cartState);
+	const [isCartDrawerOpen, setIsCartDrawerOpen] = useRecoilState(cartDrawerState);
 
 	const addToCart = (product: IProduct) => {
 		const itemInCart = cart.find((item) => item.product.id === product.id);
@@ -42,6 +44,12 @@ export const useCart = () => {
 	const getTotal = () => {
 		return cart.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
 	};
+	const openCartDrawer = () => {
+		setIsCartDrawerOpen(true);
+	};
+	const closeCartDrawer = () => {
+		setIsCartDrawerOpen(false);
+	};
 
-	return { cart, addToCart, removeFromCart, clearCart, getTotal };
+	return { cart, isCartDrawerOpen, addToCart, removeFromCart, clearCart, getTotal, openCartDrawer, closeCartDrawer };
 };

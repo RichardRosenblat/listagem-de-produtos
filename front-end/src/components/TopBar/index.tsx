@@ -6,8 +6,10 @@ import Typography from "@mui/material/Typography";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Tooltip, Zoom } from "@mui/material";
 import StoreIcon from "@mui/icons-material/Store";
+import { useCart } from "hooks/useCart";
 
 export default function TopBar() {
+	const { openCartDrawer } = useCart();
 	return (
 		<Box sx={{ flexGrow: 1 }}>
 			<AppBar position="static" style={{ position: "fixed", top: "0", left: "0" }}>
@@ -22,7 +24,14 @@ export default function TopBar() {
 						Listagem de produtos
 					</Typography>
 					<Tooltip enterNextDelay={200} title={"Abrir carrinho"} TransitionComponent={Zoom}>
-						<IconButton size="large" edge="end" color="inherit" aria-label="Abrir carrinho" sx={{ mr: 2 }}>
+						<IconButton
+							size="large"
+							edge="end"
+							color="inherit"
+							aria-label="Abrir carrinho"
+							sx={{ mr: 2 }}
+							onClick={openCartDrawer}
+						>
 							<ShoppingCartIcon />
 						</IconButton>
 					</Tooltip>
