@@ -1,19 +1,23 @@
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { Tooltip, Zoom } from "@mui/material";
 import StoreIcon from "@mui/icons-material/Store";
 import { useCart } from "hooks/useCart";
+import { Button, IconButton } from "@material-ui/core";
+import CartIcon from "./components/CartIcon";
 
 export default function TopBar() {
 	const { openCartDrawer } = useCart();
+
 	return (
 		<Box sx={{ flexGrow: 1 }}>
-			<AppBar position="static" style={{ position: "fixed", top: "0", left: "0" }}>
-				<Toolbar>
+			<AppBar
+				position="static"
+				style={{ position: "fixed", top: "0", left: "0", zIndex: "1" }}
+				sx={{ width: "100%" }}
+			>
+				<Toolbar sx={{ display: "flex" }}>
 					<StoreIcon fontSize="large" sx={{ marginRight: "10px" }} />
 					<Typography
 						variant="h6"
@@ -23,20 +27,25 @@ export default function TopBar() {
 					>
 						Listagem de produtos
 					</Typography>
-					<Tooltip enterNextDelay={200} title={"Abrir carrinho"} TransitionComponent={Zoom}>
-						<IconButton
-							size="large"
-							edge="end"
-							color="inherit"
-							aria-label="Abrir carrinho"
-							sx={{ mr: 2 }}
-							onClick={openCartDrawer}
-						>
-							<ShoppingCartIcon />
+
+					<Box sx={{ display: { xs: "block", sm: "none" } }}>
+						<IconButton aria-label="Abrir carrinho" onClick={openCartDrawer}>
+							<CartIcon />
 						</IconButton>
-					</Tooltip>
+					</Box>
+					<Box sx={{ display: { xs: "none", sm: "block" } }}>
+						<Box sx={{ display: "flex", alignItems: "center" }}>
+							<Button size="large" aria-label="Abrir carrinho" onClick={openCartDrawer}>
+								<Typography sx={{ mr: 0.5, display: { xs: "none", sm: "inherit" } }}>
+									Abrir carrinho
+								</Typography>{" "}
+								<CartIcon />
+							</Button>
+						</Box>
+					</Box>
 				</Toolbar>
 			</AppBar>
+
 			<Toolbar />
 		</Box>
 	);

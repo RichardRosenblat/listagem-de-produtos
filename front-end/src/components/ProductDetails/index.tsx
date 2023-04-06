@@ -13,6 +13,9 @@ import StoreIcon from "@mui/icons-material/Store";
 import { formatPrice } from "util/formatPrice";
 import { formatBoolean } from "util/formatBoolean";
 import { formatCathegory } from "util/formatCathegory";
+import BuildIcon from "@mui/icons-material/Build";
+import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
+import { formatDate } from "util/formatDate";
 
 const useStyles = makeStyles((theme) => ({
 	avatar: {
@@ -54,15 +57,30 @@ function ProductDetails() {
 				value: formatBoolean(selectedProduct.in_stock),
 			},
 			{
+				title: "Fabricante",
+				icon: <BuildIcon />,
+				value: selectedProduct.manufacturer,
+			},
+			{
 				title: "Categoria",
 				icon: <LabelIcon />,
 				value: formatCathegory(selectedProduct.cathegory),
+			},
+			{
+				title: "Ultima atualização",
+				icon: <CalendarTodayIcon />,
+				value: formatDate(selectedProduct.updatedAt),
+			},
+			{
+				title: "Publicado em",
+				icon: <CalendarTodayIcon />,
+				value: formatDate(selectedProduct.createdAt),
 			},
 		];
 	};
 
 	return (
-		<Dialog open={!!selectedProduct} onClose={close} maxWidth="md">
+		<Dialog open={!!selectedProduct} onClose={close} maxWidth="md" fullWidth>
 			{selectedProduct && (
 				<>
 					<DialogTitle>
