@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import {
   BadRequestException,
   Injectable,
+  Logger,
   NotFoundException,
 } from '@nestjs/common';
 import { ProductsRepository } from '../repository/products.repository';
@@ -16,6 +17,7 @@ const {
 @Injectable()
 export class ProductsCommand {
   constructor(private readonly repository: ProductsRepository) {}
+  private readonly logger = new Logger(ProductsCommand.name);
 
   /**
    * Gets all products
@@ -23,6 +25,7 @@ export class ProductsCommand {
    * @memberof ProductsCommand
    */
   public async findAll(): Promise<ProductDto[]> {
+    this.logger.log('Getting all products');
     const list = await this.repository.findAll();
     return list.map((item) => new ProductDto(item));
   }
@@ -36,6 +39,7 @@ export class ProductsCommand {
    * @memberof ProductsCommand
    */
   public async findOne(id: string): Promise<ProductDto> {
+    this.logger.log(`Getting product with id: ${id}`);
     const objectId = this.getObjectId(id);
     const foundProduct = await this.repository.findOne(objectId);
     if (!foundProduct) {
@@ -51,6 +55,7 @@ export class ProductsCommand {
    * @memberof ProductsCommand
    */
   public async create(createProductDto: CreateProductDto): Promise<ProductDto> {
+    this.logger.log(`Creating product with name: ${createProductDto.name}`);
     const createdProduct = await this.repository.create(createProductDto);
     return new ProductDto(createdProduct);
   }
@@ -68,6 +73,7 @@ export class ProductsCommand {
     id: string,
     updateProductDto: UpdateProductDto,
   ): Promise<ProductDto> {
+    this.logger.log(`Updating product with id: ${id}`);
     const objectId = this.getObjectId(id);
     const updatedProduct = await this.repository.update(
       objectId,
@@ -88,6 +94,7 @@ export class ProductsCommand {
    * @memberof ProductsCommand
    */
   public async remove(id: string): Promise<ProductDto> {
+    this.logger.log(`Removing product with id: ${id}`);
     const objectId = this.getObjectId(id);
     const deletedProduct = await this.repository.remove(objectId);
     if (!deletedProduct) {

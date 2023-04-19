@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
-import { ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -22,9 +22,12 @@ async function bootstrap() {
     )
     .setVersion('1.0')
     .build();
+
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('swagger', app, document);
 
-  await app.listen(configService.get('PORT') || 3000);
+  const PORT = configService.get('PORT') || 7000;
+  await app.listen(PORT);
+  Logger.log(`Server running on port ${PORT}`, 'Listagem de Produtos API');
 }
 bootstrap();
