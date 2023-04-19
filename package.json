@@ -6,7 +6,14 @@
   "scripts": {
     "install:back": "cd back-end && npm install",
     "ci:back": "cd back-end && npm ci",
-    "test:back": "cd back-end && npm run test"
+    "test:back": "cd back-end && npm run test",
+    "start:back": "cd back-end && npm run start",
+    "start:dev:back": "cd back-end && npm run start:dev",
+
+    "install:front": "cd front-end && yarn install",
+    "ci:front": "cd front-end && yarn ci",
+    
+    "install": "npm run install:back && npm run install:front"
   },
   "repository": {
     "type": "git",
